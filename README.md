@@ -1,6 +1,7 @@
 # Face Segmentation
 
-<img src="https://user-images.githubusercontent.com/109667895/206304229-72daef2f-9c7d-45d6-afe6-cd2f4493c297.jpg" width="400"/>
+<img src="https://user-images.githubusercontent.com/109667895/206320957-07560012-51a4-4575-b167-6637db68595f.jpg" width="400"/>
+
 Для обучения модели сегментации лиц была использована часть датасета<a href='https://github.com/switchablenorms/CelebAMask-HQ'> CelebAMASK-HQ</a> (2000изображений).
 
 Модель обучалась 10 эпох с lr=0,0001 и batch_size = 4(обучал на своей видеокарте), 2000 изображений использовал для тренировки и 420 для валидации.

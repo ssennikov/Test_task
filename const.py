@@ -1,0 +1,9 @@
+mask_folder_base = 'data\\CelebAMask-HQ\\CelebAMask-HQ-mask-anno'  # Folder with masks after unzip archive
+img_src_dir = 'data\\CelebAMask-HQ\\CelebA-HQ-img'  # folder with images for training
+mask_src_dir = 'data\\CelebAMask-HQ\\CelebAMaskHQ-mask'  # folder with only face masks
+target_dir_img = 'data\\CelebAMask-HQ\\CelebA-HQ-val-img\\'  # folder with validation images
+target_dir_mask = 'data\\CelebAMask-HQ\\CelebA-HQ-val-mask\\'  # folder with validation masks
+test_path = 'data\\test\\'  # folder with test images
+best_model_path = 'logdir\\checkpoints\\model.best.pth'
+img_num = 30000
+batch_size = 4

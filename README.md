@@ -1,6 +1,7 @@
 # Face Segmentation
 
 <img src="https://user-images.githubusercontent.com/109667895/206320957-07560012-51a4-4575-b167-6637db68595f.jpg" width="400"/>
+<img src="https://user-images.githubusercontent.com/109667895/206535524-0e4e7e83-c4de-4e3d-a16f-a9fd16bd7cd7.gif" width="400"/>
 
 Для обучения модели сегментации лиц была использована часть датасета<a href='https://github.com/switchablenorms/CelebAMask-HQ'> CelebAMASK-HQ</a> (2000изображений).
 
@@ -16,9 +17,11 @@
 
 5. const.py файл с путями
 
-В качестве модели была использованна модель UNET с головой ResNet53, а также попоробовал DeepLabV3
+Ссылка на архив с весами модели DeepLab https://drive.google.com/file/d/1dqMPKW9F7WUc45aiCH_jFgeyZxhthJmv/view?usp=share_link
 
-c головой ResNet50.
+В качестве финальной модели была использованна модель DeepLabV3 с головой ResNet50, а также попоробовал Unet
+
+c головой ResNet53.
 
 <table>
   <tr><th>model</th><th>Dice</th><th>IoU</th><th>Loss</th></tr>
@@ -26,9 +29,9 @@ c головой ResNet50.
   <tr><th>UNet</th><th>0,96</th><th>0,93</th><th>0,053</th></tr>
 </table>
 
-DeepLab обучалась дольше UNet в 2 раза и сегма на тестовый изображений практически не отличалась, 
-
-так что для дальнейших экспериментов с аугументациями был сделан выбор в пользу UNet.
+Несмотря на то что DeepLab обучалась дольше UNet в 2 раза и сегма на тестовый изображений на первый взгляд практически не отличалась, когда стал
+сравнивать фотографии лиц с перекрытиями DeepLab оказался лучше.
+Так что для дальнейших экспериментов с аугументациями был сделан выбор в пользу DeepLab.
 
 <table>
 <tr>
@@ -47,11 +50,21 @@ DeepLab обучалась дольше UNet в 2 раза и сегма на т
 
 Аугументации которые помогли улучшить сегму:
 
-  A.ColorJitter(brightness=0.3, contrast=0.3, saturation=0.3) - Произвольно изменяет яркость, контрастность, насыщенность и оттенка изображения
+ColorJitter - Произвольно изменяет яркость, контрастность, насыщенность и оттенка изображения
   
-  A.HorizontalFlip() - отражает фото по горизонтали
+HorizontalFlip - Отражает фото по горизонтали
   
-  
+CoarseDropout - Добавляет прямоугольники на изображение. После применения этой аугументации модель стала справляться с "перекрытиями"
+
+Примеры с перекрытиями:
+
+<table>
+<tr>
+   <td><th><img src="https://user-images.githubusercontent.com/109667895/206524818-91ffe7d8-5ff6-4303-b5c8-a1b004f21344.jpg" width="400"/></th></td>
+   <td><th><img src="https://user-images.githubusercontent.com/109667895/206524912-f7b1d148-ae4a-4a47-918f-46fdcba66b56.jpg" width="400"/></th></td>
+   <td><th><img src="https://user-images.githubusercontent.com/109667895/206529619-ddaa857f-8c27-40d7-9d8e-67c3c02ce2ae.jpg" width="400"/></th></td>
+</tr>
+</table>
 
 
 

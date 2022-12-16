@@ -1,9 +1,20 @@
-mask_folder_base = 'data\\CelebAMask-HQ\\CelebAMask-HQ-mask-anno'  # Folder with masks after unzip archive
-img_src_dir = 'data\\CelebAMask-HQ\\CelebA-HQ-img'  # folder with images for training
-mask_src_dir = 'data\\CelebAMask-HQ\\CelebAMaskHQ-mask'  # folder with only face masks
-target_dir_img = 'data\\CelebAMask-HQ\\CelebA-HQ-val-img\\'  # folder with validation images
-target_dir_mask = 'data\\CelebAMask-HQ\\CelebA-HQ-val-mask\\'  # folder with validation masks
-test_path = 'data\\test\\'  # folder with test images
-best_model_path = 'logdir\\checkpoints\\model.best.pth'
-img_num = 30000
-batch_size = 4
+from pathlib import Path
+
+ROOT_DIR = Path(__file__).resolve(strict=True).parent
+SRC_DIR = ROOT_DIR / 'src'
+DATA_DIR = ROOT_DIR / 'data'
+
+MASK_BASE_DIR = DATA_DIR / 'CelebAMask-HQ' / 'CelebAMask-HQ-mask-anno'  # Folder with masks after unzip archive
+
+TRAIN_IMG_DIR = DATA_DIR / 'CelebAMask-HQ' / 'CelebA-HQ-img'  # folder with images for training
+TRAIN_MASK_DIR = DATA_DIR / 'CelebAMask-HQ' / 'CelebAMaskHQ-mask'  # folder with masks for training
+
+VAL_IMG_DIR = DATA_DIR / 'CelebAMask-HQ' / 'CelebA-HQ-val-img'
+VAL_MASK_DIR = DATA_DIR / 'CelebAMask-HQ' / 'CelebA-HQ-val-mask'
+
+TEST_DIR = DATA_DIR / 'test'
+BEST_MODEL_DIR = SRC_DIR / 'logdir' / 'checkpoints' / 'model.best.pth'
+
+IMG_NUM = 5500
+IMG_NUM_VAL = 500
+BATCH_SIZE = 4

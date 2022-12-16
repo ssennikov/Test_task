@@ -8,20 +8,16 @@ from model import DeepLabv3
 from catalyst import dl
 from catalyst.dl import SupervisedRunner
 from dataset import FaceDataset
-from const import *
-import segmentation_models_pytorch as smp
+from const import TRAIN_IMG_DIR, TRAIN_MASK_DIR, VAL_IMG_DIR, VAL_MASK_DIR, BATCH_SIZE
 
-img_path = img_src_dir
-mask_path = mask_src_dir
-val_img_path = target_dir_img
-val_mask_path = target_dir_mask
 
 train_transform = A.Compose(
     [
         A.Resize(512, 512),
         A.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
-        A.ColorJitter(brightness=0.3, contrast=0.3, saturation=0.3),
-        A.HorizontalFlip(),
+        A.ColorJitter(brightness=0.5, contrast=0.5, saturation=0.5),
+        A.CoarseDropout(max_holes=1, max_height=0.7, max_width=0.7, min_height=0.2, min_width=0.2, mask_fill_value=0,
+                        p=0.5),
         ToTensorV2(),
     ]
 )
@@ -34,16 +30,15 @@ val_transform = A.Compose(
     ]
 )
 
-train_dataset = FaceDataset(img_path, mask_path, train_transform)
-val_dataset = FaceDataset(val_img_path, val_mask_path, val_transform)
+train_dataset = FaceDataset(TRAIN_IMG_DIR, TRAIN_MASK_DIR, train_transform)
+val_dataset = FaceDataset(VAL_IMG_DIR, VAL_MASK_DIR, val_transform)
 
-train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, drop_last=True, num_workers=0,
+train_loader = DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=True, drop_last=True, num_workers=0,
                           pin_memory=True)
-val_loader = DataLoader(val_dataset, batch_size=batch_size, drop_last=True, num_workers=0, pin_memory=True)
+val_loader = DataLoader(val_dataset, batch_size=BATCH_SIZE, drop_last=True, num_workers=0, pin_memory=True)
 
-#model = DeepLabv3()
+model = DeepLabv3()
 
-model = smp.Unet('resnet34', classes=1, activation=None)
 optimizer = torch.optim.Adam(model.parameters(), lr=0.0001)
 loss_fn = nn.BCEWithLogitsLoss()
 
@@ -60,6 +55,7 @@ loaders = {
 }
 
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+
 
 runner.train(
     model=model,
@@ -79,6 +75,4 @@ runner.train(
 )
 
 
-def main():
-    if __name__ == "__main__":
-        main()
+

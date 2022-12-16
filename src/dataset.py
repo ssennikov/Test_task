@@ -20,14 +20,13 @@ class FaceDataset(Dataset):
 
         image = np.array(Image.open(img_path).convert('RGB'))
         mask = np.array(Image.open(mask_path).convert('L'), dtype=np.float32)
-
         mask[mask == 255.0] = 1.0
 
         augmentations = self.transform(image=image, mask=mask)
         image = augmentations['image']
         mask = augmentations['mask']
 
-        return image, mask[None,:,:]
+        return image, mask[None, :, :]
 
 
 class TestDataset(Dataset):
